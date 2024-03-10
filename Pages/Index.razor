@@ -1,9 +1,53 @@
 ﻿@page "/"
+@using RestSharp
+@using Newtonsoft.Json
 
 <PageTitle>Index</PageTitle>
 
-<h1>Deu Certo!</h1>
+<h1>Verificar Situação Cadastral</h1>
+<input @bind="CNPJ" placeholder="Digite o CPF" />
+<button @onclick="Verificar">Verificar</button>
 
-Bem-vindo ao meu site.
+@if (Resultado != null)
+{
+    <div>
+        <h2>Situação Cadastral</h2>
+        <p>CNPJ: @CNPJ</p>
+        <p>Nome: @Resultado.Nome</p>
+        <p>Data de Consulta: @DateTime.Now</p>
+    </div>
+}
 
-@* <SurveyPrompt Title="How is Blazor working for you?" /> *@
+@code {
+    private string CNPJ;
+    private ResultadoCadastral Resultado;
+
+    private async Task Verificar()
+    {
+        // string cnpj = CNPJ.Replace("-", "").Replace(".", "").Replace("/", "");
+
+        var client = new RestClient("https://s031554ygi.execute-api.us-east-1.amazonaws.com");
+        var request = new RestRequest("/dev/Cliente", Method.Get);
+
+        RestResponse response = await client.ExecuteAsync(request);
+
+        if ((response.StatusCode == System.Net.HttpStatusCode.OK) || (response.StatusCode == System.Net.HttpStatusCode.Created))
+            Resultado = JsonConvert.DeserializeObject<ResultadoCadastral>(response.Content);
+        // try
+        // {
+        //     RestResponse response = await client.ExecuteAsync(request);
+        // }
+        // catch (Exception ex)
+        // {
+        //     // Lidar com erros de solicitação aqui
+        //     Console.WriteLine($"Erro ao obter informações do CNPJ: {ex.Message}");
+        // }
+        
+    }
+
+    public class ResultadoCadastral
+    {
+        [JsonProperty("nome")]
+        public string Nome { get; set; }
+    }
+}
