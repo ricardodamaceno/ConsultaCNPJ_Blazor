@@ -24,10 +24,21 @@
 
     private async Task Verificar()
     {
-        // string cnpj = CNPJ.Replace("-", "").Replace(".", "").Replace("/", "");
+        if (string.IsNullOrEmpty(CNPJ))
+        {
+            return;
+            
+        }
+
+        string cnpj = CNPJ.Replace("-", "").Replace(".", "").Replace("/", "");
+
+        if (!cnpj.All(char.IsDigit))
+        {
+            return;
+        }
 
         var client = new RestClient("https://s031554ygi.execute-api.us-east-1.amazonaws.com");
-        var request = new RestRequest("/dev/Cliente", Method.Get);
+        var request = new RestRequest($"/dev/Cliente?cnpj={cnpj}", Method.Get);
 
         RestResponse response = await client.ExecuteAsync(request);
 
