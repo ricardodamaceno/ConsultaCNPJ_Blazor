@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using ConsultaCNPJ.Model
 @using RestSharp
 @using Newtonsoft.Json
 
@@ -6,34 +7,74 @@
 
 <h1>Verificar Situação Cadastral</h1>
 <input @bind="CNPJ" placeholder="Digite o CNPJ" />
-<button @onclick="Verificar">Verificar</button>
+<button @onclick="Verificar" disabled="@isLoading">Verificar</button>
+
+@if (isLoading)
+{
+    <div style="display:flex; gap:10px; justify-content:center; align-items:center">
+          <div class="spinner-border" role="status"></div>
+          The application is loading...
+        </div>
+}
 
 @if (Resultado != null)
 {
     <div>
         <h2>Situação Cadastral</h2>
-        <p>CNPJ: @CNPJ</p>
+        <p>CNPJ: @Resultado.CNPJ</p>
+        <p>Abertura: @Resultado.Abertura</p>
+        <p>Situacao: @Resultado.Situacao</p>
+        <p>Tipo: @Resultado.Tipo</p>
         <p>Nome: @Resultado.Nome</p>
-        <p>Data de Consulta: @DateTime.Now</p>
+        <p>Fantasia: @Resultado.Fantasia</p>
+        <p>Logradouro: @Resultado.Logradouro</p>
+        <p>Numero: @Resultado.Numero</p>
+        <p>Municipio: @Resultado.Municipio</p>
+        <p>Bairro: @Resultado.Bairro</p>
+        <p>UF: @Resultado.UF</p>
+        <p>CEP: @Resultado.CEP</p>
+        <p>Email: @Resultado.Email</p>
+        <p>Telefone: @Resultado.Telefone</p>
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(ErrorMessage))
+{
+    <div class="alert alert-danger" role="alert">
+        @ErrorMessage
     </div>
 }
 
 @code {
     private string CNPJ;
-    private ResultadoCadastral Resultado;
+    private ConsultaCnpjResponse Resultado;
+    public string ErrorMessage { get; set; }
+    private bool isLoading = false;
 
     private async Task Verificar()
     {
+        isLoading = true;
+        
         if (string.IsNullOrEmpty(CNPJ))
         {
+            ErrorMessage = "Por favor, insira um CNPJ.";
+            isLoading = false;
             return;
-            
         }
 
         string cnpj = CNPJ.Replace("-", "").Replace(".", "").Replace("/", "");
 
         if (!cnpj.All(char.IsDigit))
         {
+            ErrorMessage = "O CNPJ pode conter apenas dígitos.";
+            isLoading = false;
+            return;
+        }
+
+        if(cnpj.Length != 14)
+        {
+            ErrorMessage = "O CNPJ deve conter 14 números.";
+            isLoading = false;
             return;
         }
 
@@ -43,22 +84,9 @@
         RestResponse response = await client.ExecuteAsync(request);
 
         if ((response.StatusCode == System.Net.HttpStatusCode.OK) || (response.StatusCode == System.Net.HttpStatusCode.Created))
-            Resultado = JsonConvert.DeserializeObject<ResultadoCadastral>(response.Content);
-        // try
-        // {
-        //     RestResponse response = await client.ExecuteAsync(request);
-        // }
-        // catch (Exception ex)
-        // {
-        //     // Lidar com erros de solicitação aqui
-        //     Console.WriteLine($"Erro ao obter informações do CNPJ: {ex.Message}");
-        // }
-        
+            Resultado = JsonConvert.DeserializeObject<ConsultaCnpjResponse>(response.Content);
+
+        isLoading = false;
     }
 
-    public class ResultadoCadastral
-    {
-        [JsonProperty("nome")]
-        public string Nome { get; set; }
-    }
 }
