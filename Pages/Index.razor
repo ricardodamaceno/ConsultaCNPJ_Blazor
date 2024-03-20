@@ -5,88 +5,112 @@
 
 <PageTitle>Index</PageTitle>
 
-<h1>Verificar Situação Cadastral</h1>
-<input @bind="CNPJ" placeholder="Digite o CNPJ" />
-<button @onclick="Verificar" disabled="@isLoading">Verificar</button>
+@if (!string.IsNullOrEmpty(ErrorMessage))
+{
+	<div class="alert alert-danger" role="alert" style="display: @(_visibleAlert ? "block" : "none")">
+		<span class="close" role="button" @onclick="CloseAlert">X</span>
+		@ErrorMessage
+	</div>
+}
+
+<div style="display: @(Resultado == null ? "block" : "none")">
+	<h1>Verificar Situação Cadastral</h1>
+	<input @bind="CNPJ" placeholder="Digite o CNPJ" />
+	<button @onclick="Verificar" disabled="@isLoading">Verificar</button>
+</div>
+
 
 @if (isLoading)
 {
-    <div style="display:flex; gap:10px; justify-content:center; align-items:center">
-          <div class="spinner-border" role="status"></div>
-          The application is loading...
-        </div>
+	<div style="display:flex; gap:10px; justify-content:center; align-items:center">
+		<div class="spinner-border" role="status"></div>
+		Buscando... 
+	</div>
 }
 
-@if (Resultado != null)
-{
-    <div>
-        <h2>Situação Cadastral</h2>
-        <p>CNPJ: @Resultado.CNPJ</p>
-        <p>Abertura: @Resultado.Abertura</p>
-        <p>Situacao: @Resultado.Situacao</p>
-        <p>Tipo: @Resultado.Tipo</p>
-        <p>Nome: @Resultado.Nome</p>
-        <p>Fantasia: @Resultado.Fantasia</p>
-        <p>Logradouro: @Resultado.Logradouro</p>
-        <p>Numero: @Resultado.Numero</p>
-        <p>Municipio: @Resultado.Municipio</p>
-        <p>Bairro: @Resultado.Bairro</p>
-        <p>UF: @Resultado.UF</p>
-        <p>CEP: @Resultado.CEP</p>
-        <p>Email: @Resultado.Email</p>
-        <p>Telefone: @Resultado.Telefone</p>
-    </div>
-}
+<div style="display: @((Resultado != null && _visibleButton) ? "block" : "none")">
+	<button @onclick="CloseButton">Nova Busca</button>
+</div>
 
-@if (!string.IsNullOrEmpty(ErrorMessage))
+@if (Resultado != null && !string.IsNullOrEmpty(Resultado.CNPJ))
 {
-    <div class="alert alert-danger" role="alert">
-        @ErrorMessage
-    </div>
+	<div>
+		<h2>Situação Cadastral</h2>
+		<p>CNPJ: @Resultado.CNPJ</p>
+		<p>Abertura: @Resultado.Abertura</p>
+		<p>Situacao: @Resultado.Situacao</p>
+		<p>Tipo: @Resultado.Tipo</p>
+		<p>Nome: @Resultado.Nome</p>
+		<p>Fantasia: @Resultado.Fantasia</p>
+		<p>Logradouro: @Resultado.Logradouro</p>
+		<p>Numero: @Resultado.Numero</p>
+		<p>Municipio: @Resultado.Municipio</p>
+		<p>Bairro: @Resultado.Bairro</p>
+		<p>UF: @Resultado.UF</p>
+		<p>CEP: @Resultado.CEP</p>
+		<p>Email: @Resultado.Email</p>
+		<p>Telefone: @Resultado.Telefone</p>
+	</div>
 }
 
 @code {
-    private string CNPJ;
-    private ConsultaCnpjResponse Resultado;
-    public string ErrorMessage { get; set; }
-    private bool isLoading = false;
+	private string CNPJ;
+	private ConsultaCnpjResponse? Resultado;
+	public string ErrorMessage { get; set; }
+	private bool isLoading = false;
+	private bool _visibleAlert = true;
+	private bool _visibleButton = true;
 
-    private async Task Verificar()
-    {
-        isLoading = true;
-        
-        if (string.IsNullOrEmpty(CNPJ))
-        {
-            ErrorMessage = "Por favor, insira um CNPJ.";
-            isLoading = false;
-            return;
-        }
+	private async Task Verificar()
+	{
+		isLoading = true;
 
-        string cnpj = CNPJ.Replace("-", "").Replace(".", "").Replace("/", "");
+		if (string.IsNullOrEmpty(CNPJ))
+		{
+			ErrorMessage = "Por favor, insira um CNPJ.";
+			isLoading = false;
+			return;
+		}
 
-        if (!cnpj.All(char.IsDigit))
-        {
-            ErrorMessage = "O CNPJ pode conter apenas dígitos.";
-            isLoading = false;
-            return;
-        }
+		string cnpj = CNPJ.Replace("-", "").Replace(".", "").Replace("/", "");
 
-        if(cnpj.Length != 14)
-        {
-            ErrorMessage = "O CNPJ deve conter 14 números.";
-            isLoading = false;
-            return;
-        }
+		if (!cnpj.All(char.IsDigit))
+		{
+			ErrorMessage = "O CNPJ pode conter apenas dígitos.";
+			isLoading = false;
+			return;
+		}
 
-        var client = new RestClient("https://s031554ygi.execute-api.us-east-1.amazonaws.com");
-        var request = new RestRequest($"/dev/Cliente?cnpj={cnpj}", Method.Get);
+		if (cnpj.Length != 14)
+		{
+			ErrorMessage = "O CNPJ deve conter 14 números.";
+			isLoading = false;
+			return;
+		}
 
-        RestResponse response = await client.ExecuteAsync(request);
+		var client = new RestClient("https://s031554ygi.execute-api.us-east-1.amazonaws.com");
+		var request = new RestRequest($"/dev/Cliente?cnpj={cnpj}", Method.Get);
 
-        if ((response.StatusCode == System.Net.HttpStatusCode.OK) || (response.StatusCode == System.Net.HttpStatusCode.Created))
-            Resultado = JsonConvert.DeserializeObject<ConsultaCnpjResponse>(response.Content);
+		RestResponse response = await client.ExecuteAsync(request);
 
-        isLoading = false;
-    }
+		if ((response.StatusCode == System.Net.HttpStatusCode.OK) || (response.StatusCode == System.Net.HttpStatusCode.Created))
+			Resultado = JsonConvert.DeserializeObject<ConsultaCnpjResponse>(response.Content);
 
+		isLoading = false;
+		_visibleButton = Resultado != null;
+
+		if(string.IsNullOrEmpty(Resultado.CNPJ))
+			ErrorMessage = "CNPJ não encontrado.";
+	}
+
+	private void CloseAlert()
+	{
+		_visibleAlert = false;
+	}
+
+	private void CloseButton()
+	{
+		_visibleButton = false;
+		Resultado = null;
+	}
 }
