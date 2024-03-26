@@ -2,6 +2,11 @@
 @using ConsultaCNPJ.Model
 @using RestSharp
 @using Newtonsoft.Json
+<style>
+	body {
+		background-color: #f0f0f0;
+	}
+</style>
 
 <PageTitle>Index</PageTitle>
 
@@ -13,10 +18,16 @@
 	</div>
 }
 
-<div style="display: @(Resultado == null ? "block" : "none")">
+<div class="container text-center" style=" display: @(Resultado == null ? "block" : "none")">
 	<h1>Verificar Situação Cadastral</h1>
-	<input @bind="CNPJ" placeholder="Digite o CNPJ" />
-	<button @onclick="Verificar" disabled="@isLoading">Verificar</button>
+	<div class ="row justify-content-center">
+		<div class="col-md-6">
+			<input class="form-control" @bind="CNPJ" placeholder="Digite o CNPJ" />
+		</div>
+	</div>
+	<div class="row justify-content-center  mt-3">
+		<button class="btn btn-primary col-md-6" @onclick="Verificar" disabled="@isLoading">Verificar</button>
+	</div>
 </div>
 
 
@@ -99,13 +110,14 @@
 		isLoading = false;
 		_visibleButton = Resultado != null;
 
-		if(string.IsNullOrEmpty(Resultado.CNPJ))
+		if (Resultado == null || string.IsNullOrEmpty(Resultado.CNPJ))
 			ErrorMessage = "CNPJ não encontrado.";
 	}
 
 	private void CloseAlert()
 	{
 		_visibleAlert = false;
+		ErrorMessage = string.Empty;
 	}
 
 	private void CloseButton()
