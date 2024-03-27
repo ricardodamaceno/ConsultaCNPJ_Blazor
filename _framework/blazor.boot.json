@@ -1,7 +1,7 @@
 {
   "entryAssembly": "ConsultaCNPJ",
   "resources": {
-    "hash": "sha256-dYFwi2ex7Xcb/RNwcGqWTJu0EwQkVj7D/c4A8o7M1Jw=",
+    "hash": "sha256-UR+QGarQurGjestj0PB+NUdx/6lN28BfXE0nPPA+uVw=",
     "runtime": {
       "dotnet.6.0.28.1yb0cy0ijd.js": "sha256-PYXBt6AuhzWXVEEyGsbAwIvVsAbcDs2FnKYIkVYqLqA=",
       "dotnet.timezones.blat": "sha256-hKZ27N25m01CP4HR0RFvVj2dU0Cw2+EqatmI4zCXdHc=",
@@ -11,7 +11,7 @@
       "icudt_no_CJK.dat": "sha256-OxylFgLJlFqixsj+nLxYVsv5iZLvfIKMpLf9hrWaChA="
     },
     "assembly": {
-      "ConsultaCNPJ.dll": "sha256-dk8yWMCIr2eecK/Ek2gtsr87UKrirewznUStgZVRGW0=",
+      "ConsultaCNPJ.dll": "sha256-tY1X46WPdOAkWh4t1ebNc+1SoFwBJsn0r/b80fK4KTo=",
       "Microsoft.AspNetCore.Components.dll": "sha256-qYcC7rxbp3AX52y4bTzWD7Fac9RCPQuxqwFxawe2c1A=",
       "Microsoft.AspNetCore.Components.Web.dll": "sha256-4c1gfOSK0PBvBPo9TWyVXoKRumCBbGEd9IRBxXLmuUQ=",
       "Microsoft.AspNetCore.Components.WebAssembly.dll": "sha256-0gT4fmKX8QQfQW+MWUB8NvOsFg6C3PoFlvvp6DrijJo=",
