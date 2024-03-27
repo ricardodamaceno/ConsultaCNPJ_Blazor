@@ -38,29 +38,116 @@
 		Buscando... 
 	</div>
 }
-
 <div style="display: @((Resultado != null && _visibleButton) ? "block" : "none")">
-	<button @onclick="CloseButton">Nova Busca</button>
+	<div class="row justify-content-center  mt-3">
+		<button class="btn btn-primary col-md-6" @onclick="CloseButton">Nova Busca</button>
+	</div>
 </div>
+
+<style>
+	.readonly-bg {
+		background-color: #fff !important; /* Define o fundo como branco */
+	}
+
+	.col-sm-4 p {
+		background-color: white;
+		display: inline-block;
+		border-bottom: 3px solid gray;
+	}
+</style>
 
 @if (Resultado != null && !string.IsNullOrEmpty(Resultado.CNPJ))
 {
-	<div>
-		<h2>Situação Cadastral</h2>
-		<p>CNPJ: @Resultado.CNPJ</p>
-		<p>Abertura: @Resultado.Abertura</p>
-		<p>Situacao: @Resultado.Situacao</p>
-		<p>Tipo: @Resultado.Tipo</p>
-		<p>Nome: @Resultado.Nome</p>
-		<p>Fantasia: @Resultado.Fantasia</p>
-		<p>Logradouro: @Resultado.Logradouro</p>
-		<p>Numero: @Resultado.Numero</p>
-		<p>Municipio: @Resultado.Municipio</p>
-		<p>Bairro: @Resultado.Bairro</p>
-		<p>UF: @Resultado.UF</p>
-		<p>CEP: @Resultado.CEP</p>
-		<p>Email: @Resultado.Email</p>
-		<p>Telefone: @Resultado.Telefone</p>
+	<div class="container mt-3">
+		<div class="container text-center">
+			<h2>Situação Cadastral</h2>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<div>
+					<label>CNPJ:</label>
+				</div>
+				<p>@Resultado.CNPJ</p>
+			</div>
+			<div class="col-sm-4">
+				<div>
+					<label>Abertura:</label>
+				</div>
+				<p>@Resultado.Abertura</p>
+			</div>
+			<div class="col-sm-4">
+				<div>
+					<label>Situacao:</label>
+				</div>
+				<p>@Resultado.Situacao</p>
+			</div>
+			<div class="col-sm-4">
+				<div>
+					<label>Tipo:</label>
+				</div>
+				<p>@Resultado.Tipo</p>
+			</div>
+			<div class="col-sm-4">
+				<div>
+					<label>Nome:</label>
+				</div>
+				<p>@Resultado.Nome</p>
+			</div>
+			<div class="col-sm-4">
+				<div>
+					<label>Fantasia:</label>
+				</div>
+				<p>@Resultado.Fantasia</p>
+			</div>
+			<div class="col-sm-4">
+				<div>
+					<label>Logradouro:</label>
+				</div>
+				<p>@Resultado.Logradouro</p>
+			</div>
+			<div class="col-sm-4">
+				<div>
+					<label>Numero:</label>
+				</div>
+				<p>@Resultado.Numero</p>
+			</div>
+			<div class="col-sm-4">
+				<div>
+					<label>Municipio:</label>
+				</div>
+				<p>@Resultado.Municipio</p>
+			</div>
+			<div class="col-sm-4">
+				<div>
+					<label>Bairro:</label>
+				</div>
+				<p>@Resultado.Bairro</p>
+			</div>
+			<div class="col-sm-4">
+				<div>
+					<label>UF:</label>
+				</div>
+				<p>@Resultado.UF</p>
+			</div>
+			<div class="col-sm-4">
+				<div>
+					<label>CEP:</label>
+				</div>
+				<p>@Resultado.CEP</p>
+			</div>
+			<div class="col-sm-4">
+				<div>
+					<label>Email:</label>
+				</div>
+				<p>@Resultado.Email</p>
+			</div>
+			<div class="col-sm-4">
+				<div>
+					<label>Telefone:</label>
+				</div>
+				<p>@Resultado.Telefone</p>
+			</div>
+		</div>
 	</div>
 }
 
