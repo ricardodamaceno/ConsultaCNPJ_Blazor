@@ -49,7 +49,7 @@
 		background-color: #fff !important; /* Define o fundo como branco */
 	}
 
-	.col-sm-4 p {
+	.preencimento p {
 		background-color: white;
 		display: inline-block;
 		border-bottom: 3px solid gray;
@@ -58,90 +58,90 @@
 
 @if (Resultado != null && !string.IsNullOrEmpty(Resultado.CNPJ))
 {
-	<div class="container mt-3">
-		<div class="container text-center">
-			<h2>Situação Cadastral</h2>
-		</div>
-		<div class="row">
-			<div class="col-sm-4">
+	<div class="container">
+		<div class="d-flex flex-wrap mt-3">
+			<div class="container text-center">
+				<h2>Situação Cadastral</h2>
+			</div>
+			<div class="p-2 item preencimento">
 				<div>
 					<label>CNPJ:</label>
 				</div>
 				<p>@Resultado.CNPJ</p>
 			</div>
-			<div class="col-sm-4">
+			<div class="p-2 item preencimento">
 				<div>
 					<label>Abertura:</label>
 				</div>
 				<p>@Resultado.Abertura</p>
 			</div>
-			<div class="col-sm-4">
+			<div class="p-2 item preencimento">
 				<div>
 					<label>Situacao:</label>
 				</div>
 				<p>@Resultado.Situacao</p>
 			</div>
-			<div class="col-sm-4">
+			<div class="p-2 item preencimento">
 				<div>
 					<label>Tipo:</label>
 				</div>
 				<p>@Resultado.Tipo</p>
 			</div>
-			<div class="col-sm-4">
+			<div class="p-2 item preencimento">
 				<div>
 					<label>Nome:</label>
 				</div>
 				<p>@Resultado.Nome</p>
 			</div>
-			<div class="col-sm-4">
+			<div class="p-2 item preencimento">
 				<div>
 					<label>Fantasia:</label>
 				</div>
 				<p>@Resultado.Fantasia</p>
 			</div>
-			<div class="col-sm-4">
+			<div class="p-2 item preencimento">
 				<div>
 					<label>Logradouro:</label>
 				</div>
 				<p>@Resultado.Logradouro</p>
 			</div>
-			<div class="col-sm-4">
+			<div class="p-2 item preencimento">
 				<div>
 					<label>Numero:</label>
 				</div>
 				<p>@Resultado.Numero</p>
 			</div>
-			<div class="col-sm-4">
+			<div class="p-2 item preencimento">
 				<div>
 					<label>Municipio:</label>
 				</div>
 				<p>@Resultado.Municipio</p>
 			</div>
-			<div class="col-sm-4">
+			<div class="p-2 item preencimento">
 				<div>
 					<label>Bairro:</label>
 				</div>
 				<p>@Resultado.Bairro</p>
 			</div>
-			<div class="col-sm-4">
+			<div class="p-2 item preencimento">
 				<div>
 					<label>UF:</label>
 				</div>
 				<p>@Resultado.UF</p>
 			</div>
-			<div class="col-sm-4">
+			<div class="p-2 item preencimento">
 				<div>
 					<label>CEP:</label>
 				</div>
 				<p>@Resultado.CEP</p>
 			</div>
-			<div class="col-sm-4">
+			<div class="p-2 item preencimento">
 				<div>
 					<label>Email:</label>
 				</div>
 				<p>@Resultado.Email</p>
 			</div>
-			<div class="col-sm-4">
+			<div class="p-2 item preencimento">
 				<div>
 					<label>Telefone:</label>
 				</div>
@@ -149,6 +149,7 @@
 			</div>
 		</div>
 	</div>
+	
 }
 
 @code {
@@ -158,6 +159,7 @@
 	private bool isLoading = false;
 	private bool _visibleAlert = true;
 	private bool _visibleButton = true;
+	private string cor = "#FF0000";
 
 	private async Task Verificar()
 	{
