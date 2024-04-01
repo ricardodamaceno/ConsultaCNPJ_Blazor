@@ -20,7 +20,7 @@
 
 <div class="container text-center" style=" display: @(Resultado == null ? "block" : "none")">
 	<h1>Verificar Situação Cadastral</h1>
-	<div class ="row justify-content-center">
+	<div class="row justify-content-center">
 		<div class="col-md-6">
 			<input class="form-control" @bind="CNPJ" placeholder="Digite o CNPJ" />
 		</div>
@@ -35,7 +35,7 @@
 {
 	<div style="display:flex; gap:10px; justify-content:center; align-items:center">
 		<div class="spinner-border mt-3" role="status"></div>
-		Buscando... 
+		Buscando...
 	</div>
 }
 <div style="display: @((Resultado != null && _visibleButton) ? "block" : "none")">
@@ -43,113 +43,82 @@
 		<button class="btn btn-primary col-md-6" @onclick="CloseButton">Nova Busca</button>
 	</div>
 </div>
-
 <style>
-	.readonly-bg {
-		background-color: #fff !important; /* Define o fundo como branco */
+	.table-rounded {
+		border-radius: 50px;
 	}
 
-	.preencimento p {
-		background-color: white;
-		display: inline-block;
-		border-bottom: 3px solid gray;
+	.borda-arredondada {
+		border-radius: 10px; /* ajuste conforme necessário */
+		border: 2px solid black; /* cor e largura da borda */
 	}
 </style>
 
+
 @if (Resultado != null && !string.IsNullOrEmpty(Resultado.CNPJ))
 {
-	<div class="container">
-		<div class="d-flex flex-wrap mt-3">
-			<div class="container text-center">
-				<h2>Situação Cadastral</h2>
-			</div>
-			<div class="p-2 item preencimento">
-				<div>
-					<label>CNPJ:</label>
-				</div>
-				<p>@Resultado.CNPJ</p>
-			</div>
-			<div class="p-2 item preencimento">
-				<div>
-					<label>Abertura:</label>
-				</div>
-				<p>@Resultado.Abertura</p>
-			</div>
-			<div class="p-2 item preencimento">
-				<div>
-					<label>Situacao:</label>
-				</div>
-				<p>@Resultado.Situacao</p>
-			</div>
-			<div class="p-2 item preencimento">
-				<div>
-					<label>Tipo:</label>
-				</div>
-				<p>@Resultado.Tipo</p>
-			</div>
-			<div class="p-2 item preencimento">
-				<div>
-					<label>Nome:</label>
-				</div>
-				<p>@Resultado.Nome</p>
-			</div>
-			<div class="p-2 item preencimento">
-				<div>
-					<label>Fantasia:</label>
-				</div>
-				<p>@Resultado.Fantasia</p>
-			</div>
-			<div class="p-2 item preencimento">
-				<div>
-					<label>Logradouro:</label>
-				</div>
-				<p>@Resultado.Logradouro</p>
-			</div>
-			<div class="p-2 item preencimento">
-				<div>
-					<label>Numero:</label>
-				</div>
-				<p>@Resultado.Numero</p>
-			</div>
-			<div class="p-2 item preencimento">
-				<div>
-					<label>Municipio:</label>
-				</div>
-				<p>@Resultado.Municipio</p>
-			</div>
-			<div class="p-2 item preencimento">
-				<div>
-					<label>Bairro:</label>
-				</div>
-				<p>@Resultado.Bairro</p>
-			</div>
-			<div class="p-2 item preencimento">
-				<div>
-					<label>UF:</label>
-				</div>
-				<p>@Resultado.UF</p>
-			</div>
-			<div class="p-2 item preencimento">
-				<div>
-					<label>CEP:</label>
-				</div>
-				<p>@Resultado.CEP</p>
-			</div>
-			<div class="p-2 item preencimento">
-				<div>
-					<label>Email:</label>
-				</div>
-				<p>@Resultado.Email</p>
-			</div>
-			<div class="p-2 item preencimento">
-				<div>
-					<label>Telefone:</label>
-				</div>
-				<p>@Resultado.Telefone</p>
-			</div>
-		</div>
+	<div class="borda-arredondada mt-3">
+		<table class="table table-borderless">
+			<tbody>
+				<tr>
+					<td style="width:20%" align="right"><b>CNPJ:</b></td>
+					<td style="width:80%" align="left"><b>@Resultado.CNPJ</b></td>
+				</tr>
+				<tr>
+					<td style="width:20%" align="right"><b>Abertura:</b></td>
+					<td style="width:80%" align="left"><b>@Resultado.Abertura</b></td>
+				</tr>
+				<tr>
+					<td style="width:20%" align="right"><b>Situacao:</b></td>
+					<td style="width:80%" align="left"><b>@Resultado.Situacao</b></td>
+				</tr>
+				<tr>
+					<td style="width:20%" align="right"><b>Tipo:</b></td>
+					<td style="width:80%" align="left"><b>@Resultado.Tipo</b></td>
+				</tr>
+				<tr>
+					<td style="width:20%" align="right"><b>Nome:</b></td>
+					<td style="width:80%" align="left"><b>@Resultado.Nome</b></td>
+				</tr>
+				<tr>
+					<td style="width:20%" align="right"><b>Fantasia:</b></td>
+					<td style="width:80%" align="left"><b>@Resultado.Fantasia</b></td>
+				</tr>
+				<tr>
+					<td style="width:20%" align="right"><b>Logradouro:</b></td>
+					<td style="width:80%" align="left"><b>@Resultado.Logradouro</b></td>
+				</tr>
+				<tr>
+					<td style="width:20%" align="right"><b>Municipio:</b></td>
+					<td style="width:80%" align="left"><b>@Resultado.Municipio</b></td>
+				</tr>
+				<tr>
+					<td style="width:20%" align="right"><b>Bairro:</b></td>
+					<td style="width:80%" align="left"><b>@Resultado.Bairro</b></td>
+				</tr>
+				<tr>
+					<td style="width:20%" align="right"><b>UF:</b></td>
+					<td style="width:80%" align="left"><b>@Resultado.UF</b></td>
+				</tr>
+				<tr>
+					<td style="width:20%" align="right"><b>Bairro:</b></td>
+					<td style="width:80%" align="left"><b>@Resultado.Bairro</b></td>
+				</tr>
+				<tr>
+					<td style="width:20%" align="right"><b>CEP:</b></td>
+					<td style="width:80%" align="left"><b>@Resultado.CEP</b></td>
+				</tr>
+				<tr>
+					<td style="width:20%" align="right"><b>Email:</b></td>
+					<td style="width:80%" align="left"><b>@Resultado.Email</b></td>
+				</tr>
+				<tr>
+					<td style="width:20%" align="right"><b>Telefone:</b></td>
+					<td style="width:80%" align="left"><b>@Resultado.Telefone</b></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
-	
 }
 
 @code {
